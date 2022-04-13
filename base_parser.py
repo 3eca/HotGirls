@@ -1,9 +1,8 @@
+#!/usr/bin/env python
 # -*- coding: utf8 -*-
 
 import re
-# import bot_config
-#
-# import requests
+
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from requests import Session

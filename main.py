@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf8 -*-
 import asyncio
 import logging
@@ -36,13 +37,14 @@ async def media_group(message: types.Message):
         for image in images:
             media.attach_photo(image)
         try:
-            await bot.send_media_group(message.chat.id, media=media,
-                                       reply_to_message_id=message.message_id)
+            await bot.send_media_group(message.chat.id, media=media)
             del media
         except RetryAfter as why:
             await asyncio.sleep(why.timeout)
         except BadRequest:
             await asyncio.sleep(10)
+    await bot.send_message(message.chat.id, 'С этой всё...',
+                           reply_to_message_id=message.message_id)
 
 
 @dp.message_handler(commands='girl', commands_prefix='/')
@@ -53,12 +55,13 @@ async def photo(message: types.Message):
     for images in generate(bp.upload_image_2(random_girl)):
         for image in images:
             try:
-                await bot.send_photo(message.chat.id, photo=image,
-                                     reply_to_message_id=message.message_id)
+                await bot.send_photo(message.chat.id, photo=image)
             except RetryAfter as why:
                 await asyncio.sleep(why.timeout)
             except BadRequest:
                 await asyncio.sleep(10)
+    await bot.send_message(message.chat.id, 'С этой всё...',
+                           reply_to_message_id=message.message_id)
 
 
 if __name__ == '__main__':
